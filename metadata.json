@@ -1,0 +1,6 @@
+{
+  "name": "SIH26013 - Geospatial Land Record Harmonization",
+  "description": "Automated integration and intelligent harmonization of multi-source geospatial data for urban land record management with MongoDB Atlas and AI conflict resolution",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
