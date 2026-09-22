@@ -36,6 +36,9 @@ export interface ParcelRecord {
   status: 'DRAFT' | 'CONFLICT_FLAGGED' | 'HARMONIZED' | 'UNDER_MUTATION';
   confidenceScore: number; // 0 to 100%
   geometry: GeoPolygon;
+  cadastralBoundary?: GeoPolygon;
+  droneBoundary?: GeoPolygon;
+  centroid?: [number, number];
   sourceLayers: string[];
   conflictIds?: string[];
   lastHarmonizedAt?: string;

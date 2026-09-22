@@ -20,6 +20,7 @@ import { MongoAtlasConfigModal } from './components/MongoAtlasConfigModal';
 import { DataIngestModal } from './components/DataIngestModal';
 import { CertificateModal } from './components/CertificateModal';
 import { AuditTrailModal } from './components/AuditTrailModal';
+import { ProblemStatementModal } from './components/ProblemStatementModal';
 import { 
   Sparkles, 
   AlertTriangle, 
@@ -28,7 +29,11 @@ import {
   Layers, 
   Search, 
   ShieldCheck, 
-  Database 
+  Database,
+  Landmark,
+  FileText,
+  Compass,
+  ArrowRight
 } from 'lucide-react';
 
 export default function App() {
@@ -52,6 +57,7 @@ export default function App() {
   const [showIngestModal, setShowIngestModal] = useState(false);
   const [showAuditModal, setShowAuditModal] = useState(false);
   const [showConflictModal, setShowConflictModal] = useState(false);
+  const [showProblemModal, setShowProblemModal] = useState(false);
 
   // Toast notification
   const [toast, setToast] = useState<{ msg: string; type: 'success' | 'info' | 'error' } | null>(null);
@@ -120,7 +126,7 @@ export default function App() {
         particleCount: 100,
         spread: 70,
         origin: { y: 0.6 },
-        colors: ['#10b981', '#06b6d4', '#8b5cf6'],
+        colors: ['#059669', '#0284c7', '#7c3aed'],
       });
 
       showToast(`Harmonized ${res.resolvedConflictsCount} geospatial conflicts and reconciled all cadastral boundaries!`);
@@ -173,7 +179,7 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-100 flex flex-col font-sans selection:bg-emerald-500 selection:text-slate-950">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-600 selection:text-white">
       {/* Top Navigation Bar */}
       <Header
         dbStatus={dbStatus}
@@ -181,6 +187,7 @@ export default function App() {
         onOpenAtlasModal={() => setShowAtlasModal(true)}
         onOpenIngestModal={() => setShowIngestModal(true)}
         onOpenAuditModal={() => setShowAuditModal(true)}
+        onOpenProblemModal={() => setShowProblemModal(true)}
         onAutoHarmonize={handleAutoHarmonize}
         isHarmonizing={isHarmonizing}
         activeTab={activeTab}
@@ -189,6 +196,44 @@ export default function App() {
 
       {/* Main Workspace Layout */}
       <main className="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col gap-6">
+        {/* Ministry & SIH Problem Statement Quick Banner */}
+        <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+          <div className="flex items-start gap-3">
+            <div className="w-9 h-9 rounded-xl bg-orange-50 border border-orange-200 flex items-center justify-center text-orange-700 shrink-0 font-bold">
+              SIH
+            </div>
+            <div>
+              <div className="flex flex-wrap items-center gap-2">
+                <span className="text-xs font-bold text-orange-800 bg-orange-50 border border-orange-200 px-2 py-0.5 rounded">
+                  Problem ID: 26013
+                </span>
+                <span className="text-xs font-bold text-emerald-800 bg-emerald-50 border border-emerald-200 px-2 py-0.5 rounded">
+                  Dept of Land Resources (DoLR)
+                </span>
+                <span className="text-xs font-medium text-slate-600 bg-slate-100 px-2 py-0.5 rounded hidden sm:inline">
+                  NAKSHA Programme
+                </span>
+              </div>
+              <h2 className="text-sm font-bold text-slate-900 mt-1">
+                Automated Integration and Intelligent Harmonization of Multi-source Geospatial Data for Urban Land Records
+              </h2>
+              <p className="text-xs text-slate-500 mt-0.5 max-w-3xl">
+                Unified CRS projection (EPSG:4326), automatic overlap & encroachment resolution, MongoDB Atlas 2dsphere indexing, and Bhu-Aadhaar (ULPIN) certification.
+              </p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-2 self-stretch md:self-auto shrink-0">
+            <button
+              onClick={() => setShowProblemModal(true)}
+              className="w-full md:w-auto px-3.5 py-2 bg-slate-50 hover:bg-slate-100 border border-slate-300 rounded-xl text-xs font-semibold text-slate-800 flex items-center justify-center gap-1.5 transition-colors shadow-2xs"
+            >
+              <FileText className="w-3.5 h-3.5 text-emerald-700" />
+              View Description & Specs
+            </button>
+          </div>
+        </div>
+
         {/* Dynamic View Tab Rendering */}
         {activeTab === 'map' && (
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 flex-1 items-start">
@@ -257,6 +302,11 @@ export default function App() {
           />
         )}
       </main>
+
+      {/* Problem Statement Modal */}
+      {showProblemModal && (
+        <ProblemStatementModal onClose={() => setShowProblemModal(false)} />
+      )}
 
       {/* Modals */}
       {showAtlasModal && (
@@ -327,8 +377,8 @@ export default function App() {
 
       {/* Floating Toast Notification */}
       {toast && (
-        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-slate-900 border border-emerald-500/80 text-emerald-300 shadow-2xl text-xs font-medium animate-in slide-in-from-bottom-5">
-          <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0" />
+        <div className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 px-4 py-3 rounded-xl bg-white border border-emerald-500 text-slate-800 shadow-2xl text-xs font-semibold animate-in slide-in-from-bottom-5">
+          <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>{toast.msg}</span>
         </div>
       )}

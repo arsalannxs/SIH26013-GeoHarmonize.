@@ -22,31 +22,31 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-sm animate-in fade-in duration-200">
-      <div className="bg-slate-900 border border-slate-700 rounded-2xl max-w-2xl w-full p-6 shadow-2xl text-slate-200 max-h-[90vh] flex flex-col">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-in fade-in duration-200">
+      <div className="bg-white border border-slate-200 rounded-2xl max-w-2xl w-full p-6 shadow-2xl text-slate-800 max-h-[90vh] flex flex-col">
         {/* Header */}
-        <div className="flex items-center justify-between pb-4 border-b border-slate-800 mb-4">
+        <div className="flex items-center justify-between pb-4 border-b border-slate-200 mb-4">
           <div className="flex items-center gap-2.5">
-            <div className="p-2 rounded-lg bg-purple-950 border border-purple-800/80 text-purple-400">
+            <div className="p-2 rounded-xl bg-purple-50 border border-purple-200 text-purple-700">
               <History className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-sm font-bold text-white">Immutable Mutation Audit Trail</h3>
-              <p className="text-xs text-slate-400">Cryptographically sealed log of all boundary reconciliations</p>
+              <h3 className="text-sm font-bold text-slate-900">Immutable Mutation Audit Trail</h3>
+              <p className="text-xs text-slate-500">Cryptographically sealed log of all boundary reconciliations</p>
             </div>
           </div>
 
           <div className="flex items-center gap-2">
             <button
               onClick={handleExportJSON}
-              className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 border border-slate-700 rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-colors"
+              className="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 border border-slate-300 rounded-lg text-xs font-semibold text-slate-700 flex items-center gap-1.5 transition-colors shadow-2xs"
             >
-              <Download className="w-3.5 h-3.5" />
+              <Download className="w-3.5 h-3.5 text-slate-600" />
               Export JSON
             </button>
             <button
               onClick={onClose}
-              className="p-1.5 text-slate-400 hover:text-white rounded-lg hover:bg-slate-800 transition-colors"
+              className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 transition-colors"
             >
               <X className="w-5 h-5" />
             </button>
@@ -54,29 +54,29 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({
         </div>
 
         {/* Logs List */}
-        <div className="space-y-3 overflow-y-auto flex-1 pr-1">
+        <div className="space-y-2.5 overflow-y-auto flex-1 pr-1">
           {logs.map((log, idx) => (
             <div
               key={log.logId || idx}
-              className="p-3.5 rounded-xl bg-slate-950/80 border border-slate-800 text-xs hover:border-slate-700 transition-colors"
+              className="p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs hover:border-purple-300 transition-colors shadow-2xs"
             >
               <div className="flex items-center justify-between gap-2 mb-1.5">
                 <div className="flex items-center gap-2">
-                  <span className="font-mono text-[10px] text-purple-400 bg-purple-950/80 px-2 py-0.5 rounded border border-purple-800 font-semibold">
+                  <span className="font-mono text-[10px] text-purple-800 bg-purple-50 px-2 py-0.5 rounded border border-purple-200 font-bold">
                     {log.action}
                   </span>
-                  <span className="text-slate-200 font-medium">{log.actor}</span>
+                  <span className="text-slate-900 font-semibold">{log.actor}</span>
                 </div>
-                <span className="text-[10px] font-mono text-slate-500">
+                <span className="text-[10px] font-mono text-slate-500 font-medium">
                   {new Date(log.timestamp).toLocaleString()}
                 </span>
               </div>
 
-              <p className="text-slate-300 text-[11px] mb-2">{log.details}</p>
+              <p className="text-slate-700 text-[11px] mb-2 leading-relaxed">{log.details}</p>
 
-              <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-slate-850">
-                <span>Parcel: <span className="font-mono text-slate-300">{log.parcelUlpin}</span></span>
-                <span className="font-mono truncate max-w-[200px]" title={log.signatureHash}>
+              <div className="flex items-center justify-between text-[10px] text-slate-500 pt-2 border-t border-slate-200 font-medium">
+                <span>Parcel: <span className="font-mono font-semibold text-slate-800">{log.parcelUlpin}</span></span>
+                <span className="font-mono truncate max-w-[220px]" title={log.signatureHash}>
                   Hash: {log.signatureHash.slice(0, 18)}...
                 </span>
               </div>
@@ -84,10 +84,10 @@ export const AuditTrailModal: React.FC<AuditTrailModalProps> = ({
           ))}
         </div>
 
-        <div className="pt-4 border-t border-slate-800 text-right mt-3">
+        <div className="pt-4 border-t border-slate-200 text-right mt-3">
           <button
             onClick={onClose}
-            className="px-4 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-medium"
+            className="px-5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-lg text-xs font-semibold transition-colors"
           >
             Close
           </button>
